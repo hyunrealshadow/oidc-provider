@@ -68,7 +68,8 @@
     "object-hash": "^3.0.0",
     "oidc-token-hash": "^5.0.1",
     "quick-lru": "^6.1.1",
-    "raw-body": "^2.5.1"
+    "raw-body": "^2.5.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@fastify/middie": "^8.0.0",
