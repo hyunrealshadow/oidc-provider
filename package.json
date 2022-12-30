@@ -75,6 +75,7 @@
     "@fastify/middie": "^8.0.0",
     "@hapi/hapi": "^21.0.0",
     "@koa/ejs": "^5.0.0",
+    "@types/koa": "^2.13.5",
     "base64url": "^3.0.1",
     "chai": "^4.3.6",
     "clear-module": "^4.1.2",
