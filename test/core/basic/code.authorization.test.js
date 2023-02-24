@@ -543,7 +543,8 @@ describe('BASIC code', () => {
               expect(renderSpy.calledOnce).to.be.true;
               const renderArgs = renderSpy.args[0];
               expect(renderArgs[1]).to.have.property('error', 'invalid_request');
-              expect(renderArgs[1]).to.have.property('error_description', 'missing required parameter \'redirect_uri\'');
+              expect(renderArgs[1]).to.have.property('error_description')
+                .and.satisfy((it) => it.toString() === 'missing required parameter \'redirect_uri\'');
               expect(renderArgs[2]).to.be.an.instanceof(InvalidRequest);
             });
         });
@@ -599,7 +600,8 @@ describe('BASIC code', () => {
               expect(renderSpy.calledOnce).to.be.true;
               const renderArgs = renderSpy.args[0];
               expect(renderArgs[1]).to.have.property('error', 'invalid_request');
-              expect(renderArgs[1]).to.have.property('error_description', 'missing required parameter \'redirect_uri\'');
+              expect(renderArgs[1]).to.have.property('error_description')
+                .and.satisfy((it) => it.toString() === 'missing required parameter \'redirect_uri\'');
               expect(renderArgs[2]).to.be.an.instanceof(InvalidRequest);
             });
         });
@@ -708,7 +710,8 @@ describe('BASIC code', () => {
             expect(renderSpy.calledOnce).to.be.true;
             const renderArgs = renderSpy.args[0];
             expect(renderArgs[1]).to.have.property('error', 'invalid_request');
-            expect(renderArgs[1]).to.have.property('error_description', 'missing required parameter \'client_id\'');
+            expect(renderArgs[1]).to.have.property('error_description')
+              .and.satisfy((it) => it.toString() === 'missing required parameter \'client_id\'');
             expect(renderArgs[2]).to.be.an.instanceof(InvalidRequest);
           });
       });

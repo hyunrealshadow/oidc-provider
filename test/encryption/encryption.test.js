@@ -198,7 +198,8 @@ describe('encryption', () => {
               .expect(() => {
                 expect(spy.calledOnce).to.be.true;
                 expect(spy.args[0][1]).to.have.property('message', 'invalid_request');
-                expect(spy.args[0][1]).to.have.property('error_description', "missing required parameter 'client_id'");
+                expect(spy.args[0][1]).to.have.property('error_description')
+                  .and.satisfy((it) => it.toString() === "missing required parameter 'client_id'");
               });
           });
 
