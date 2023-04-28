@@ -68,7 +68,7 @@ describe('Client metadata validation', () => {
         } else {
           expect(err.message).to.equal('invalid_client_metadata');
         }
-        expect(err.error_description).to.equal(`${prop} must be a non-empty string if provided`);
+        expect(err.error_description.toString()).to.equal(`${prop} must be a non-empty string if provided`);
         return true;
       }));
     });
@@ -90,9 +90,9 @@ describe('Client metadata validation', () => {
           expect(err.message).to.equal('invalid_client_metadata');
         }
         if (protocols.length === 1 && protocols[0] === 'https') {
-          expect(err.error_description).to.equal(`${prop} must be a https uri`);
+          expect(err.error_description.toString()).to.equal(`${prop} must be a https uri`);
         } else {
-          expect(err.error_description).to.equal(`${prop} must be a web uri`);
+          expect(err.error_description.toString()).to.equal(`${prop} must be a web uri`);
         }
         return true;
       },
@@ -123,7 +123,7 @@ describe('Client metadata validation', () => {
           } else {
             expect(err.message).to.equal('invalid_client_metadata');
           }
-          expect(err.error_description).to.equal(`${prop} must be an array`);
+          expect(err.error_description.toString()).to.equal(`${prop} must be an array`);
           return true;
         },
       ));
@@ -148,7 +148,7 @@ describe('Client metadata validation', () => {
           } else {
             expect(err.message).to.equal('invalid_client_metadata');
           }
-          expect(err.error_description).to.equal(`${prop} must be a boolean`);
+          expect(err.error_description.toString()).to.equal(`${prop} must be a boolean`);
           return true;
         },
       ));
@@ -187,7 +187,7 @@ describe('Client metadata validation', () => {
           } else {
             expect(err.message).to.equal('invalid_client_metadata');
           }
-          expect(err.error_description).to.equal(`${prop} is mandatory property`);
+          expect(err.error_description.toString()).to.equal(`${prop} is mandatory property`);
           return true;
         },
       ));
@@ -226,7 +226,7 @@ describe('Client metadata validation', () => {
         expect(err.message).to.equal('invalid_client_metadata');
       }
       if (description) {
-        expect(err.error_description).to[description.exec ? 'match' : 'equal'](description);
+        expect(err.error_description.toString()).to[description.exec ? 'match' : 'equal'](description);
       }
       return true;
     }));
@@ -1007,7 +1007,7 @@ describe('Client metadata validation', () => {
         ),
         (err) => {
           expect(err.message).to.equal('invalid_client_metadata');
-          expect(err.error_description).to.equal(
+          expect(err.error_description.toString()).to.equal(
             'id_token_encrypted_response_alg is mandatory property when id_token_encrypted_response_enc is provided',
           );
           return true;
@@ -1113,7 +1113,7 @@ describe('Client metadata validation', () => {
         ),
         (err) => {
           expect(err.message).to.equal('invalid_client_metadata');
-          expect(err.error_description).to.equal(
+          expect(err.error_description.toString()).to.equal(
             'userinfo_encrypted_response_alg is mandatory property when userinfo_encrypted_response_enc is provided',
           );
           return true;
@@ -1218,7 +1218,7 @@ describe('Client metadata validation', () => {
         ),
         (err) => {
           expect(err.message).to.equal('invalid_client_metadata');
-          expect(err.error_description).to.equal(
+          expect(err.error_description.toString()).to.equal(
             'introspection_encrypted_response_alg is mandatory property when introspection_encrypted_response_enc is provided',
           );
           return true;
@@ -1318,7 +1318,7 @@ describe('Client metadata validation', () => {
         ),
         (err) => {
           expect(err.message).to.equal('invalid_client_metadata');
-          expect(err.error_description).to.equal(
+          expect(err.error_description.toString()).to.equal(
             'authorization_encrypted_response_alg is mandatory property when authorization_encrypted_response_enc is provided',
           );
           return true;
@@ -1422,7 +1422,7 @@ describe('Client metadata validation', () => {
         ),
         (err) => {
           expect(err.message).to.equal('invalid_client_metadata');
-          expect(err.error_description).to.equal(
+          expect(err.error_description.toString()).to.equal(
             'request_object_encryption_alg is mandatory property when request_object_encryption_enc is provided',
           );
           return true;

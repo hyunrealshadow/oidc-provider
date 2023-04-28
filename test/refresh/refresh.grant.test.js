@@ -204,7 +204,8 @@ describe('grant_type=refresh_token', () => {
         .expect(400)
         .expect((response) => {
           expect(response.body).to.have.property('error', 'invalid_scope');
-          expect(response.body).to.have.property('error_description', 'refresh token missing requested scopes');
+          expect(response.body).to.have.property('error_description')
+            .and.satisfy((it) => it.toString() === 'refresh token missing requested scopes');
           expect(response.body).to.have.property('scope', 'profile address');
         });
     });

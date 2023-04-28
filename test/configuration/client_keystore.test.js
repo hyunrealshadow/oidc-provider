@@ -80,13 +80,13 @@ describe('client keystore refresh', () => {
       assert.rejects(client.asymmetricKeyStore.refresh(), (err) => {
         expect(err).to.be.an('error');
         expect(err.message).to.equal('invalid_client_metadata');
-        expect(err.error_description).to.eql('client JSON Web Key Set failed to be refreshed');
+        expect(err.error_description.toString()).to.eql('client JSON Web Key Set failed to be refreshed');
         return true;
       }),
       assert.rejects(client.asymmetricKeyStore.refresh(), (err) => {
         expect(err).to.be.an('error');
         expect(err.message).to.equal('invalid_client_metadata');
-        expect(err.error_description).to.eql('client JSON Web Key Set failed to be refreshed');
+        expect(err.error_description.toString()).to.eql('client JSON Web Key Set failed to be refreshed');
         return true;
       }),
     ]);
@@ -125,7 +125,7 @@ describe('client keystore refresh', () => {
     return assert.rejects(client.asymmetricKeyStore.refresh(), (err) => {
       expect(err).to.be.an('error');
       expect(err.message).to.equal('invalid_client_metadata');
-      expect(err.error_description).to.eql('client JSON Web Key Set failed to be refreshed');
+      expect(err.error_description.toString()).to.eql('client JSON Web Key Set failed to be refreshed');
       return true;
     });
   });
@@ -151,7 +151,7 @@ describe('client keystore refresh', () => {
     return assert.rejects(client.asymmetricKeyStore.refresh(), (err) => {
       expect(err).to.be.an('error');
       expect(err.message).to.equal('invalid_client_metadata');
-      expect(err.error_description).to.eql('client JSON Web Key Set failed to be refreshed');
+      expect(err.error_description.toString()).to.eql('client JSON Web Key Set failed to be refreshed');
       return true;
     });
   });

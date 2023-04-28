@@ -30,7 +30,8 @@ describe('OAuth 2.0 for Native Apps Best Current Practice features', () => {
           redirect_uris: ['myapp:/op/callback'],
         }), (err) => {
           expect(err).to.have.property('message', 'invalid_redirect_uri');
-          expect(err).to.have.property('error_description', 'redirect_uris for native clients using Custom URI scheme should use reverse domain name based scheme');
+          expect(err).to.have.property('error_description')
+            .and.satisfy((it) => it.toString() === 'redirect_uris for native clients using Custom URI scheme should use reverse domain name based scheme');
           return true;
         });
       });
@@ -58,7 +59,8 @@ describe('OAuth 2.0 for Native Apps Best Current Practice features', () => {
           redirect_uris: ['https://localhost/op/callback'],
         }), (err) => {
           expect(err).to.have.property('message', 'invalid_redirect_uri');
-          expect(err).to.have.property('error_description', 'redirect_uris for native clients using claimed HTTPS URIs must not be using localhost as hostname');
+          expect(err).to.have.property('error_description')
+            .and.satisfy((it) => it.toString() === 'redirect_uris for native clients using claimed HTTPS URIs must not be using localhost as hostname');
           return true;
         });
       });
@@ -198,7 +200,8 @@ describe('OAuth 2.0 for Native Apps Best Current Practice features', () => {
           redirect_uris: ['http://rp.example.com/op/callback'],
         }), (err) => {
           expect(err).to.have.property('message', 'invalid_redirect_uri');
-          expect(err).to.have.property('error_description', 'redirect_uris for native clients using http as a protocol can only use loopback addresses as hostnames');
+          expect(err).to.have.property('error_description')
+            .and.satisfy((it) => it.toString() === 'redirect_uris for native clients using http as a protocol can only use loopback addresses as hostnames');
           return true;
         });
       });

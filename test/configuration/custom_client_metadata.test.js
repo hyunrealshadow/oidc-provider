@@ -121,7 +121,8 @@ describe('extraClientMetadata configuration', () => {
       throw new Error('expected a throw from the above');
     } catch (err) {
       expect(err).to.have.property('message', 'invalid_client_metadata');
-      expect(err).to.have.property('error_description', 'client_secret is mandatory property');
+      expect(err).to.have.property('error_description')
+        .and.satisfy((it) => it.toString() === 'client_secret is mandatory property');
     }
   });
 

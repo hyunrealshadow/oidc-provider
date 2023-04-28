@@ -47,7 +47,7 @@ describe('pairwise features', () => {
         }, (err) => {
           expect(err).to.be.ok;
           expect(err.message).to.eq('invalid_client_metadata');
-          expect(err.error_description).to.eq('sector_identifier_uri is mandatory property');
+          expect(err.error_description.toString()).to.eq('sector_identifier_uri is mandatory property');
         });
       });
     });
@@ -109,7 +109,7 @@ describe('pairwise features', () => {
           expect(client).not.to.be.ok;
         }, (err) => {
           expect(err.message).to.equal('invalid_client_metadata');
-          expect(err.error_description).to.equal('sector_identifier_uri must be a https uri');
+          expect(err.error_description.toString()).to.equal('sector_identifier_uri must be a https uri');
         });
       });
 
@@ -238,7 +238,7 @@ describe('pairwise features', () => {
         }, (err) => {
           expect(err).to.be.ok;
           expect(err.message).to.eq('invalid_client_metadata');
-          expect(err.error_description).to.eq('unexpected sector_identifier_uri response status code, expected 200 OK, got 500 Internal Server Error');
+          expect(err.error_description.toString()).to.eq('unexpected sector_identifier_uri response status code, expected 200 OK, got 500 Internal Server Error');
         });
       });
 
@@ -258,7 +258,7 @@ describe('pairwise features', () => {
         }, (err) => {
           expect(err).to.be.ok;
           expect(err.message).to.eq('invalid_client_metadata');
-          expect(err.error_description).to.eq('unexpected sector_identifier_uri response status code, expected 200 OK, got 201 Created');
+          expect(err.error_description.toString()).to.eq('unexpected sector_identifier_uri response status code, expected 200 OK, got 201 Created');
         });
       });
     });
