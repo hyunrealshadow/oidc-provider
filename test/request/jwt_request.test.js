@@ -374,10 +374,8 @@ describe('request parameter features', () => {
           .expect(() => {
             expect(spy.calledOnce).to.be.true;
             expect(spy.args[0][1]).to.have.property('message', 'invalid_request');
-            expect(spy.args[0][1]).to.have.property(
-              'error_description',
-              "'scope' parameter must not be provided twice",
-            );
+            expect(spy.args[0][1]).to.have.property('error_description')
+              .and.satisfy((it) => it.toString() === "'scope' parameter must not be provided twice");
           }));
       });
 
