@@ -83,7 +83,7 @@ export default function testHelper(importMetaUrl, {
 
   return async function () {
     const conf = pathToFileURL(path.format({ dir, base: `${base}.config.js` })).toString();
-    const { default: mod } = await import(`file://${conf}`);
+    const { default: mod } = await import(conf);
     const { config, client } = mod;
     let { clients } = mod;
 
