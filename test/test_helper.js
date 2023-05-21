@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-import { parse } from 'node:url';
+import { parse, pathToFileURL } from 'node:url';
 import * as path from 'node:path';
 import * as querystring from 'node:querystring';
 import { createServer } from 'node:http';
@@ -14,6 +14,7 @@ import { expect } from 'chai';
 import koaMount from 'koa-mount';
 import base64url from 'base64url';
 import KeyGrip from 'keygrip'; // eslint-disable-line import/no-extraneous-dependencies
+import { CookieAccessInfo } from 'cookiejar'; // eslint-disable-line import/no-extraneous-dependencies
 import Connect from 'connect';
 import Express from 'express';
 import Koa from 'koa';
@@ -81,7 +82,7 @@ export default function testHelper(importMetaUrl, {
   });
 
   return async function () {
-    const conf = path.format({ dir, base: `${base}.config.js` });
+    const conf = pathToFileURL(path.format({ dir, base: `${base}.config.js` })).toString();
     const { default: mod } = await import(`file://${conf}`);
     const { config, client } = mod;
     let { clients } = mod;
@@ -115,7 +116,10 @@ export default function testHelper(importMetaUrl, {
         `_session.legacy.sig=; path=/; expires=${expire.toGMTString()}; httponly`,
       ];
 
-      return agent._saveCookies.bind(agent)({ headers: { 'set-cookie': cookies } });
+      return agent._saveCookies.bind(agent)({
+        request: { url: provider.issuer },
+        headers: { 'set-cookie': cookies },
+      });
     }
 
     async function login({
@@ -181,7 +185,10 @@ export default function testHelper(importMetaUrl, {
       }
 
       return Account.findAccount({}, accountId).then(session.save(ttl)).then(() => {
-        agent._saveCookies.bind(agent)({ headers: { 'set-cookie': cookies } });
+        agent._saveCookies.bind(agent)({
+          request: { url: provider.issuer },
+          headers: { 'set-cookie': cookies },
+        });
       });
     }
 
@@ -330,8 +337,13 @@ export default function testHelper(importMetaUrl, {
       return lastSession;
     }
 
+    function getSessionId() {
+      const { value: sessionId } = agent.jar.getCookie('_session', CookieAccessInfo.All) || {};
+      return sessionId;
+    }
+
     function getSession({ instantiate } = { instantiate: false }) {
-      const { value: sessionId } = agent.jar.getCookie('_session', { path: '/' });
+      const sessionId = getSessionId();
       const raw = TestAdapter.for('Session').syncFind(sessionId);
 
       if (instantiate) {
@@ -339,11 +351,6 @@ export default function testHelper(importMetaUrl, {
       }
 
       return raw;
-    }
-
-    function getSessionId() {
-      const { value: sessionId } = agent.jar.getCookie('_session', { path: '/' }) || {};
-      return sessionId;
     }
 
     function getGrantId(client_id) {
@@ -470,7 +477,7 @@ export default function testHelper(importMetaUrl, {
         await app.register(middie);
         app.use(mountTo, provider.callback());
         await new Promise((resolve) => { global.server.close(resolve); });
-        await app.listen(port, '::');
+        await app.listen({ port, host: '::' });
         global.server = app.server;
         afterPromises.push(async () => {
           await app.close();

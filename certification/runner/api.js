@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { strict as assert } from 'node:assert';
-import { createWriteStream } from 'node:fs';
+import { createWriteStream, writeFileSync } from 'node:fs';
 import * as stream from 'node:stream';
 import { promisify } from 'node:util';
 
@@ -12,7 +12,7 @@ import debug from './debug.js';
 const pipeline = promisify(stream.pipeline);
 
 const FINISHED = new Set(['FINISHED']);
-const RESULTS = new Set(['REVIEW', 'PASSED', 'SKIPPED']);
+const RESULTS = new Set(['REVIEW', 'PASSED', 'WARNING', 'SKIPPED']);
 
 class API {
   constructor({ baseUrl, bearerToken } = {}) {
@@ -118,6 +118,12 @@ class API {
   async downloadArtifact({ planId } = {}) {
     assert(planId, 'argument property "planId" missing');
     const filename = `export-${planId}.zip`;
+    if (process.env.GITHUB_ENV) {
+      writeFileSync(process.env.GITHUB_ENV, `EXPORT_FILE=${filename}`, { flag: 'a' });
+    }
+    if (process.env.GITHUB_STEP_SUMMARY) {
+      writeFileSync(process.env.GITHUB_STEP_SUMMARY, `\n\nArtifact: \`${filename}\``, { flag: 'a' });
+    }
     return pipeline(
       this.stream(`api/plan/exporthtml/${planId}`, {
         headers: { accept: 'application/zip' },
