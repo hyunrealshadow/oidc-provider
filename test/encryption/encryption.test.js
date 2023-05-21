@@ -271,7 +271,8 @@ describe('encryption', () => {
               .expect(() => {
                 expect(spy.calledOnce).to.be.true;
                 expect(spy.args[0][1]).to.have.property('message', 'invalid_request_object');
-                expect(spy.args[0][1]).to.have.property('error_description', 'Request Object is not a valid JWE');
+                expect(spy.args[0][1]).to.have.property('error_description')
+                  .and.satisfy((it) => it.toString() === 'Request Object is not a valid JWE');
               });
           });
         });

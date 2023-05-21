@@ -230,10 +230,8 @@ describe('request parameter features', () => {
             .expect(() => {
               expect(spy.calledOnce).to.be.true;
               expect(spy.args[0][1]).to.have.property('message', 'invalid_request_object');
-              expect(spy.args[0][1]).to.have.property(
-                'error_description',
-                route !== '/device/auth' ? 'Request Object is not a valid JWT' : 'could not parse Request Object',
-              );
+              expect(spy.args[0][1]).to.have.property('error_description')
+                .and.satisfy((it) => (route !== '/device/auth' ? it.toString() === 'Request Object is not a valid JWT' : it.toString() === 'could not parse Request Object'));
             });
         });
 
