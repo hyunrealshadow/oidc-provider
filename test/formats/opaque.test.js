@@ -62,7 +62,7 @@ describe('opaque storage', () => {
     const token = new this.provider.AccessToken({ client, ...fullPayload });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       accountId,
       aud,
@@ -91,7 +91,7 @@ describe('opaque storage', () => {
     const token = new this.provider.AuthorizationCode({ client, ...fullPayload });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       accountId,
       acr,
@@ -125,7 +125,7 @@ describe('opaque storage', () => {
     const token = new this.provider.DeviceCode({ client, ...fullPayload });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       accountId,
       acr,
@@ -161,7 +161,7 @@ describe('opaque storage', () => {
     const token = new this.provider.BackchannelAuthenticationRequest({ client, ...fullPayload });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       accountId,
       acr,
@@ -194,7 +194,7 @@ describe('opaque storage', () => {
     const token = new this.provider.RefreshToken({ client, ...fullPayload });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       accountId,
       acr,
@@ -229,7 +229,7 @@ describe('opaque storage', () => {
     const token = new this.provider.ClientCredentials({ client, ...fullPayload });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       aud,
       clientId,
@@ -253,7 +253,7 @@ describe('opaque storage', () => {
     });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       exp: number,
       iat: number,
@@ -274,7 +274,7 @@ describe('opaque storage', () => {
     });
     await token.save();
 
-    expect(upsert.getCall(0).args[0]).to.have.lengthOf(43);
+    expect(upsert.getCall(0).args[0]).to.have.lengthOf(36);
     assert.calledWith(upsert, string, {
       clientId,
       kind,
