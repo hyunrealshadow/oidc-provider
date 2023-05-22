@@ -894,7 +894,7 @@ export interface Configuration {
   clients?: ClientMetadata[] | undefined;
 
   formats?: {
-    bitsOfOpaqueRandomness?: number | ((ctx: KoaContextWithOIDC, model: BaseModel) => number) | undefined;
+    bitsOfOpaqueRandomness?: ((ctx: KoaContextWithOIDC, model: BaseModel) => number) | undefined;
     customizers?: {
       jwt?: ((
         ctx: KoaContextWithOIDC,
