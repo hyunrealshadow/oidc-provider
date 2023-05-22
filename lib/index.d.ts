@@ -850,7 +850,7 @@ export interface AdapterPayload extends AllClientMetadata {
 }
 
 export interface Adapter {
-  upsert(id: string, payload: AdapterPayload, expiresIn: number): Promise<undefined | void>; // tslint:disable-line:void-return
+  upsert(id: string, payload: AdapterPayload, expiresIn: number): Promise<undefined | void | string>; // tslint:disable-line:void-return
   find(id: string): Promise<AdapterPayload | undefined | void>; // tslint:disable-line:void-return
   findByUserCode(userCode: string): Promise<AdapterPayload | undefined | void>; // tslint:disable-line:void-return
   findByUid(uid: string): Promise<AdapterPayload | undefined | void>; // tslint:disable-line:void-return
