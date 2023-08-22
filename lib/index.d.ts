@@ -1169,6 +1169,8 @@ export interface Configuration {
 
   rotateRefreshToken?: ((ctx: KoaContextWithOIDC) => CanBePromise<boolean>) | boolean | undefined;
 
+  errorPrefix?: string | undefined;
+
   renderError?: ((
     ctx: KoaContextWithOIDC,
     out: ErrorOut,
