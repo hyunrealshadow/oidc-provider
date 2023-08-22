@@ -1954,6 +1954,7 @@ export namespace interactionPolicy {
     constructor(
       reason: string,
       description: string,
+      errno: string,
       error: string,
       check: (ctx: KoaContextWithOIDC) => CanBePromise<boolean>,
       details?: (ctx: KoaContextWithOIDC) => CanBePromise<UnknownObject>,
@@ -1961,12 +1962,14 @@ export namespace interactionPolicy {
     constructor(
       reason: string,
       description: string,
+      errno: string,
       check: (ctx: KoaContextWithOIDC) => CanBePromise<boolean>,
       details?: (ctx: KoaContextWithOIDC) => CanBePromise<UnknownObject>,
     );
 
     reason: string;
     description: string;
+    errno: string;
     error: string;
     details: (ctx: KoaContextWithOIDC) => CanBePromise<UnknownObject>;
     check: (ctx: KoaContextWithOIDC) => CanBePromise<boolean>;
@@ -1992,6 +1995,7 @@ export namespace interactionPolicy {
 export namespace errors {
   class OIDCProviderError extends Error {
     constructor(status: number, message: string);
+    errno: string;
     error: string;
     error_description?: string | undefined;
     error_detail?: string | undefined;

@@ -15,6 +15,7 @@ const policy = base();
 const check = new Check(
   'reason_foo',
   'error_description_foo',
+  '101',
   'error_foo',
   (ctx) => {
     if (ctx.oidc.params.triggerCustomFail) {
