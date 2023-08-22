@@ -1226,7 +1226,7 @@ export type AsymmetricSigningAlgorithm =
   | 'RS512';
 export type SymmetricSigningAlgorithm = 'HS256' | 'HS384' | 'HS512';
 export type SigningAlgorithm = AsymmetricSigningAlgorithm | SymmetricSigningAlgorithm;
-export type SigningAlgorithmWithNone = AsymmetricSigningAlgorithm | SymmetricSigningAlgorithm;
+export type SigningAlgorithmWithNone = AsymmetricSigningAlgorithm | SymmetricSigningAlgorithm | 'none';
 export type EncryptionAlgValues =
   | 'RSA-OAEP'
   | 'RSA-OAEP-256'
