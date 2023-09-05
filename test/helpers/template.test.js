@@ -17,7 +17,7 @@ describe('template helper', () => {
   });
   it('parse template string to get template information with intl format array and pluralize', () => {
     const result = template`Test ${[['param', 'params', 1], { type: 'pluralize' }]} Test ${[['param', 'params', 2], { type: 'pluralize' }]}`;
-    expect(result.template).to.eq('Test {{key0, intlPluralize(one: param, many: params)}} Test {{key1, intlPluralize(one: param, many: params)}}');
+    expect(result.template).to.eq('Test {{key0, intlPlural(one: param; other: params)}} Test {{key1, intlPlural(one: param; other: params)}}');
     expect(result.variables).to.eql({ key0: 1, key1: 2 });
     expect(result.toString()).to.eq('Test param Test params');
   });
