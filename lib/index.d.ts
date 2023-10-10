@@ -1177,6 +1177,12 @@ export interface Configuration {
     error: errors.OIDCProviderError | Error,
   ) => CanBePromise<undefined | void>) | undefined; // tslint:disable-line:void-return
 
+  formatError?: (
+    ctx: KoaContextWithOIDC,
+    out: ErrorOut,
+    error: errors.OIDCProviderError | Error,
+  ) => CanBePromise<ErrorOut>;
+
   allowOmittingSingleRegisteredRedirectUri?: boolean | undefined;
 
   acceptQueryParamAccessTokens?: boolean | undefined;
@@ -1994,13 +2000,18 @@ export namespace interactionPolicy {
   function base(): DefaultPolicy;
 }
 
+interface Template extends String {
+  template: string;
+  variables: Record<string, string>
+}
+
 export namespace errors {
   class OIDCProviderError extends Error {
     constructor(status: number, message: string);
     errno: string;
     error: string;
-    error_description?: string | undefined;
-    error_detail?: string | undefined;
+    error_description?: string | Template | undefined;
+    error_detail?: string | Template | undefined;
     expose: boolean;
     statusCode: number;
     status: number;
