@@ -1,3 +1,19 @@
+> [!NOTE]
+> This package is a fork of [node-oidc-provider]
+> For my personal use, I have added some features.
+>
+> All error now have a `errno` property that is a string representation of the error code.
+> It can be used to identify the error, and is useful for internationalization.
+>
+> Adaptor can return an id to customize opaque token generation.
+>
+> This repository was initially private and later converted to a public repository,
+> so there is no fork association.
+
+> [!CAUTION]
+> This package has not been published to the public NPM registry,
+> although it can pass all unit tests, there may be unknown bugs.
+
 # oidc-provider
 
 This module provides an OAuth 2.0 ([RFC 6749][oauth2]) Authorization Server with support for OpenID Connect ([OIDC][openid-connect]) and many
@@ -57,7 +73,7 @@ package.json since breaking changes may be introduced as part of these version u
 your CI.
 
 ## Certification
-[<img width="184" height="96" align="right" src="https://cdn.jsdelivr.net/gh/panva/node-oidc-provider@acd3ebf2f5ebbb5605463cb681a1fb2ab9742ace/OpenID_Certified.png" alt="OpenID Certification">][openid-certified-link]  
+[<img width="184" height="96" align="right" src="https://cdn.jsdelivr.net/gh/panva/node-oidc-provider@acd3ebf2f5ebbb5605463cb681a1fb2ab9742ace/OpenID_Certified.png" alt="OpenID Certification">][openid-certified-link]
 Filip Skokan has [certified][openid-certified-link] that [oidc-provider][npm-url]
 conforms to the following profiles of the OpenID Connect™ protocol.
 
