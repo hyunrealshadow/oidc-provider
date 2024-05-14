@@ -23,12 +23,12 @@ const provider = new Provider('http://localhost:3000', {
 
 const { invalidate: orig } = provider.Client.Schema.prototype;
 
-provider.Client.Schema.prototype.invalidate = function invalidate(message, code) {
+provider.Client.Schema.prototype.invalidate = function invalidate(code, errno, variables) {
   if (code === 'implicit-force-https' || code === 'implicit-forbid-localhost') {
     return;
   }
 
-  orig.call(this, message);
+  orig.call(this, code, errno, variables);
 };
 ```
 

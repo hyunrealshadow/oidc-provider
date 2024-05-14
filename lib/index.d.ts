@@ -684,6 +684,13 @@ declare class Client {
   [key: string]: unknown;
 
   static find(id: string): Promise<Client | undefined>;
+
+  Schema: {
+    prototype: {
+      invalidate(code: string, errno: string): void;
+      invalidate(code: string, errno: string, variable: any[]): void;
+    }
+  }
 }
 
 export interface ResourceServer {

@@ -466,7 +466,7 @@ describe('Client metadata validation', () => {
             const spy = DefaultProvider.Client.Schema.prototype.invalidate;
             expect(spy).to.have.property('calledOnce', true);
             const call = spy.getCall(0);
-            const [, code] = call.args;
+            const [code] = call.args;
             expect(code).to.eql('implicit-force-https');
           },
         )
@@ -489,7 +489,7 @@ describe('Client metadata validation', () => {
           const spy = DefaultProvider.Client.Schema.prototype.invalidate;
           expect(spy).to.have.property('calledOnce', true);
           const call = spy.getCall(0);
-          const [, code] = call.args;
+          const [code] = call.args;
           expect(code).to.eql('implicit-forbid-localhost');
         },
       );
