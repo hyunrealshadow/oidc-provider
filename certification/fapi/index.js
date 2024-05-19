@@ -316,7 +316,7 @@ fapi.use(async (ctx, next) => {
       await grant.save();
       await fapi.backchannelResult(request, grant, { acr: 'urn:mace:incommon:iap:silver' }).catch(() => {});
     } else {
-      await fapi.backchannelResult(request, new errors.AccessDenied('end-user cancelled request')).catch(() => {});
+      await fapi.backchannelResult(request, new errors.AccessDenied(true, undefined, '003')).catch(() => {});
     }
 
     ctx.body = { done: true };
