@@ -33,6 +33,8 @@ export interface UnknownObject {
 export interface JWK {
   kid?: string | undefined;
   x5c?: string[] | undefined;
+  x5t?: string | undefined;
+  'x5t#S256'?: string | undefined;
   alg?: string | undefined;
   crv?: string | undefined;
   d?: string | undefined;
@@ -226,6 +228,7 @@ declare class Session extends BaseModel {
   }
     | undefined;
 
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   authTime(): string | void;
   past(age: number): boolean;
 
@@ -237,6 +240,7 @@ declare class Session extends BaseModel {
     loginTs?: number | undefined;
     transient?: boolean | undefined;
   }): void;
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   authorizationFor(clientId: string): ClientAuthorizationState | void;
   sidFor(clientId: string): string;
   sidFor(clientId: string, value: string): void;
@@ -890,13 +894,13 @@ export interface AdapterPayload extends AllClientMetadata {
 }
 
 export interface Adapter {
-  upsert(id: string, payload: AdapterPayload, expiresIn: number): Promise<undefined | void | string>; // tslint:disable-line:void-return
-  find(id: string): Promise<AdapterPayload | undefined | void>; // tslint:disable-line:void-return
-  findByUserCode(userCode: string): Promise<AdapterPayload | undefined | void>; // tslint:disable-line:void-return
-  findByUid(uid: string): Promise<AdapterPayload | undefined | void>; // tslint:disable-line:void-return
-  consume(id: string): Promise<undefined | void>; // tslint:disable-line:void-return
-  destroy(id: string): Promise<undefined | void>; // tslint:disable-line:void-return
-  revokeByGrantId(grantId: string): Promise<undefined | void>; // tslint:disable-line:void-return
+  upsert(id: string, payload: AdapterPayload, expiresIn: number): Promise<undefined | void | string>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+  find(id: string): Promise<AdapterPayload | undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+  findByUserCode(userCode: string): Promise<AdapterPayload | undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+  findByUid(uid: string): Promise<AdapterPayload | undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+  consume(id: string): Promise<undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+  destroy(id: string): Promise<undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+  revokeByGrantId(grantId: string): Promise<undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
 }
 
 export type AdapterFactory = (name: string) => Adapter;
@@ -1044,7 +1048,7 @@ export interface Configuration {
         [key: string]: (
           ctx: KoaContextWithOIDC,
           metadata: ClientMetadata,
-        ) => CanBePromise<undefined | void>; // tslint:disable-line:void-return
+        ) => CanBePromise<undefined | void>; // eslint-disable-line @typescript-eslint/no-invalid-void-type
       }
         | undefined;
       idFactory?: ((ctx: KoaContextWithOIDC) => string) | undefined;
@@ -1072,7 +1076,7 @@ export interface Configuration {
         form: string,
         out?: ErrorOut,
         err?: errors.OIDCProviderError | Error,
-      ) => CanBePromise<undefined | void>) // tslint:disable-line:void-return
+      ) => CanBePromise<undefined | void>) // eslint-disable-line @typescript-eslint/no-invalid-void-type
         | undefined;
       userCodeConfirmSource?:
         | ((
@@ -1081,9 +1085,9 @@ export interface Configuration {
         client: Client,
         deviceInfo: UnknownObject,
         userCode: string,
-      ) => CanBePromise<undefined | void>) // tslint:disable-line:void-return
+      ) => CanBePromise<undefined | void>) // eslint-disable-line @typescript-eslint/no-invalid-void-type
         | undefined;
-      successSource?: ((ctx: KoaContextWithOIDC) => CanBePromise<undefined | void>) | undefined; // tslint:disable-line:void-return
+      successSource?: ((ctx: KoaContextWithOIDC) => CanBePromise<undefined | void>) | undefined; // eslint-disable-line @typescript-eslint/no-invalid-void-type
     }
       | undefined;
 
@@ -1179,10 +1183,10 @@ export interface Configuration {
       | {
       enabled?: boolean | undefined;
       postLogoutSuccessSource?:
-        | ((ctx: KoaContextWithOIDC) => CanBePromise<undefined | void>) // tslint:disable-line:void-return
+        | ((ctx: KoaContextWithOIDC) => CanBePromise<undefined | void>) // eslint-disable-line @typescript-eslint/no-invalid-void-type
         | undefined;
       logoutSource?:
-        | ((ctx: KoaContextWithOIDC, form: string) => CanBePromise<undefined | void>) // tslint:disable-line:void-return
+        | ((ctx: KoaContextWithOIDC, form: string) => CanBePromise<undefined | void>) // eslint-disable-line @typescript-eslint/no-invalid-void-type
         | undefined;
     }
       | undefined;
@@ -1213,7 +1217,13 @@ export interface Configuration {
         client: Client,
       ) => CanBePromise<ResourceServer>)
         | undefined;
-      defaultResource?: ((ctx: KoaContextWithOIDC) => CanBePromise<string | string[]>) | undefined;
+      defaultResource?:
+        | ((
+        ctx: KoaContextWithOIDC,
+        client: Client,
+        oneOf?: string[] | undefined,
+      ) => CanBePromise<string | string[]>)
+        | undefined;
       useGrantedResource?:
         | ((
         ctx: KoaContextWithOIDC,
@@ -1316,6 +1326,7 @@ export interface Configuration {
       key: string,
       value: unknown,
       metadata: ClientMetadata,
+      // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     ) => void | undefined)
       | undefined;
   }
@@ -1330,7 +1341,7 @@ export interface Configuration {
     ctx: KoaContextWithOIDC,
     out: ErrorOut,
     error: errors.OIDCProviderError | Error,
-  ) => CanBePromise<undefined | void>) // tslint:disable-line:void-return
+  ) => CanBePromise<undefined | void>) // eslint-disable-line @typescript-eslint/no-invalid-void-type
     | undefined;
 
   formatError?: (
@@ -2195,7 +2206,7 @@ export type StringOrTemplate = string | Template;
 
 export namespace errors {
   class OIDCProviderError extends Error {
-    constructor(status: number, message: string);
+    constructor(status: number, message: string, errno: string);
     errno: string;
     error: string;
     error_description?: StringOrTemplate | undefined;
@@ -2206,121 +2217,122 @@ export namespace errors {
     allow_redirect: boolean;
   }
   class ExpiredLoginHintToken extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidBindingMessage extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidUserCode extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class MissingUserCode extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class TransactionFailed extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class UnknownUserId extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class AccessDenied extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class AuthorizationPending extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class ConsentRequired extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class ExpiredToken extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InteractionRequired extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidClient extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidDpopProof extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidClientAuth extends OIDCProviderError {
-    constructor(detail: string);
+    constructor(errno?: string, variables?: any[]);
   }
   class InvalidClientMetadata extends OIDCProviderError {
-    constructor(description: string);
+    constructor(detail: string, errno?: string, variables?: any[]);
   }
   class InvalidGrant extends OIDCProviderError {
-    constructor(detail: string);
+    constructor(errno?: string, variables?: any[]);
   }
   class InvalidRequest extends OIDCProviderError {
-    constructor(description: string, code?: number);
+    constructor(code?: number, detail?: string, errno?: string, variables?: any[]);
   }
-  class SessionNotFound extends InvalidRequest {}
+  class SessionNotFound extends InvalidRequest {
+  }
   class InvalidRequestObject extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidRequestUri extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidScope extends OIDCProviderError {
-    constructor(description: string, scope: string);
+    constructor(scope: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InsufficientScope extends OIDCProviderError {
-    constructor(description: string, scope: string);
+    constructor(scope: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidSoftwareStatement extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidTarget extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidToken extends OIDCProviderError {
-    constructor(detail: string);
+    constructor(errno?: string, variables?: any[]);
   }
   class LoginRequired extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class InvalidRedirectUri extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor();
   }
   class RegistrationNotSupported extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class RequestNotSupported extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class RequestUriNotSupported extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class SlowDown extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class TemporarilyUnavailable extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class UnapprovedSoftwareStatement extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class UnauthorizedClient extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class UnsupportedGrantType extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class UnsupportedResponseMode extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class UnsupportedResponseType extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
   class WebMessageUriMismatch extends OIDCProviderError {
-    constructor(description?: string, detail?: string);
+    constructor();
   }
   class CustomOIDCProviderError extends OIDCProviderError {
-    constructor(message: string, description?: string);
+    constructor(description?: string, detail?: string, errno?: string);
   }
   class UnmetAuthenticationRequirements extends OIDCProviderError {
-    constructor(message: string, description?: string);
+    constructor(description?: string, detail?: string, errno?: string, variables?: any[]);
   }
 }
